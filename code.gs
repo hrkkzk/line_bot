@@ -1,6 +1,7 @@
 const LINE_URL = 'https://api.line.me/v2/bot/message/reply';
 const USER_ID = PropertiesService.getScriptProperties().getProperty("USER_ID"); 
 const LINE_TOKEN = PropertiesService.getScriptProperties().getProperty("LINE_TOKEN"); 
+const MAIL = PropertiesService.getScriptProperties().getProperty("MAIL"); 
 
 function doPost(e){
   const json = JSON.parse(e.postData.contents);
@@ -9,7 +10,8 @@ function doPost(e){
   if (typeof json.events[0].replyToken === 'underfined') { return; }
   
   if (json.events[0].message.type == 'text') {
-    line_post(json.events[0].replyToken, json.events[0].message.text);
+    MailApp.sendEmail(MAIL, 'test', text);
+    line_post(json.events[0].replyToken, json.events[0].message.text); // オウム返し
   }
 
   return;
